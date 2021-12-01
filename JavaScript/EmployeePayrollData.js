@@ -52,7 +52,12 @@ class EmployeePayrollData {
     }
 
     set startDate(startDate) {
-        this._startDate = startDate;
+        let future = new Date();
+        future.setDate(future.getDate() + 30);
+        if (startDate < new Date() || startDate < future)
+            this._startDate = startDate;
+        else
+            throw "Start Date is Correct";
     }
 
     get notes() {
@@ -68,19 +73,4 @@ class EmployeePayrollData {
         const employeeDate = this.startDate == undefined ? "undefined" : this.startDate.toLocaleDateString("en-us", options);
         return "Name = " + this.name + ", Profile Image = " + this.profileImage + ", Gender = " + this.gender + ", Department = " + this.department + ", Salary = " + this.salary + ", Start Date = " + employeeDate + ", Notes = " + this.notes;
     }
-}
-
-function save() {
-
-    let employeeName = document.querySelector('#name').value;
-    let profileList = document.querySelectorAll('input[name="profile"]');
-    let employeeProfileImage;
-    for (let image of profileList) {
-        if (image.checked) {
-            employeeProfileImage = image.value;
-            break;
-        }
-    }
-
-
 }
